@@ -35,6 +35,7 @@ public class Launcher {
         //3. compute savings interest over the past month (take in account the current balance).
         double interests = savingsAccount.getBalance() * savingsAccount.getInterestRate(); //this is the interests calculation
 
+        //this is to be completed
     }
 
 
