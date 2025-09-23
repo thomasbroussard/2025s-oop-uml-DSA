@@ -28,10 +28,9 @@ public class Launcher {
         SavingsAccount savingsAccount = new SavingsAccount();
         InvestmentAccount investmentAccount = new InvestmentAccount();
         System.out.println("Enter the initial balance of the investment account: ");
-        String line = scanner.nextLine();
-        investmentAccount.setBalance(Double.parseDouble(line));
+        investmentAccount.setBalance(getDecimalValue("Enter the initial balance of the investment account: ", scanner));
         savingsAccount.setAccountId("s123");
-        savingsAccount.setInterestRate(0.0325);
+        savingsAccount.setInterestRate(getDecimalValue("enter the interestRate", scanner));
         savingsAccount.setBalance(300.0);
 
 
@@ -46,7 +45,15 @@ public class Launcher {
         double interests = BankAccountService.calculateInterests(savingsAccount); //this is the interests calculation
 
 
+        scanner.close();
 
+    }
+
+    private static double getDecimalValue(String prompt,Scanner scanner) {
+        System.out.println(prompt);
+        String line = scanner.nextLine();
+        double decimalValue = Double.parseDouble(line);
+        return decimalValue;
     }
 
 
