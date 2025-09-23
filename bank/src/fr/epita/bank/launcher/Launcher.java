@@ -1,20 +1,35 @@
 package fr.epita.bank.launcher;
 
 import fr.epita.bank.datamodel.*;
+import fr.epita.bank.fr.epita.bank.services.BankAccountService;
+
+import java.util.Scanner;
 
 public class Launcher {
 
+
+
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         Customer customer = new Customer();
-        customer.setName( "test");
-        customer.setAddress("Paris");
+        System.out.println("Customer Creation, enter a customer name:");
+        customer.setName( scanner.nextLine() );
+        System.out.println("Customer Creation, enter an address:");
+        customer.setAddress(scanner.nextLine());
 
         System.out.println(customer);
+
+
+
+
+
 
         //1. simulate the creation of 2 accounts, 1 savings, 1 invest.
         SavingsAccount savingsAccount = new SavingsAccount();
         InvestmentAccount investmentAccount = new InvestmentAccount();
-        investmentAccount.setBalance(300.0);
+        System.out.println("Enter the initial balance of the investment account: ");
+        String line = scanner.nextLine();
+        investmentAccount.setBalance(Double.parseDouble(line));
         savingsAccount.setAccountId("s123");
         savingsAccount.setInterestRate(0.0325);
         savingsAccount.setBalance(300.0);
@@ -24,18 +39,14 @@ public class Launcher {
         Stock gold = new Stock();
         gold.setCurrentPrice(30.0);
         //to be completed
-        StockOrder stockOrder = new StockOrder();
-        stockOrder.setInvestmentAccount(investmentAccount);
-        stockOrder.setStock(gold);
-        stockOrder.setQuantity(3);
-        stockOrder.setUnitPrice(gold.getCurrentPrice());
-        stockOrder.setCommission(0.0); //TODO find out the formula to calculate commission
+        StockOrder stockOrder = BankAccountService.buyStock(investmentAccount, gold, 3);
 
-
+        System.out.println(stockOrder);
         //3. compute savings interest over the past month (take in account the current balance).
-        double interests = savingsAccount.getBalance() * savingsAccount.getInterestRate(); //this is the interests calculation
+        double interests = BankAccountService.calculateInterests(savingsAccount); //this is the interests calculation
 
-        //this is to be completed
+
+
     }
 
 
