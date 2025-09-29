@@ -1,7 +1,7 @@
 package fr.epita.bank.launcher;
 
 import fr.epita.bank.datamodel.*;
-import fr.epita.bank.fr.epita.bank.services.BankAccountService;
+import fr.epita.bank.services.BankAccountService;
 
 import java.util.Scanner;
 

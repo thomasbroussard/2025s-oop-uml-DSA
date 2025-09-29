@@ -23,14 +23,19 @@ public class Launcher {
         square.getPerimeter();
 
         Rectangle rectangle = new Rectangle(3, 5);
+        List<Shape> shapes = new ArrayList<>();
+
+
         List<Shape> listOfObjects = List.of(circle, triangle, square, rectangle);
         double totalArea = 0.0;
+        double totalPerimeter = 0.0;
         for (Shape object : listOfObjects) {
             totalArea += object.getArea();
+            totalPerimeter += object.getPerimeter();
         }
 
         System.out.println("total area: " + totalArea);
-
+        System.out.println("total perimeter: " + totalPerimeter);
 
 
     }
