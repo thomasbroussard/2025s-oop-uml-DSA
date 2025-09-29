@@ -17,7 +17,7 @@ public class Square implements Shape {
     public double getArea() {
         return side * side;
     }
-    public double getPerimeter() {
+    public double calculatePerimeter() {
         return this.side * 4;
     }
 

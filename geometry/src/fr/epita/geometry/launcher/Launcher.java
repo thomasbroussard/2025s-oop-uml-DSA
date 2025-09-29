@@ -1,9 +1,6 @@
 package fr.epita.geometry.launcher;
 
-import fr.epita.geometry.datamodel.Circle;
-import fr.epita.geometry.datamodel.Shape;
-import fr.epita.geometry.datamodel.Square;
-import fr.epita.geometry.datamodel.Triangle;
+import fr.epita.geometry.datamodel.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +21,9 @@ public class Launcher {
         Square square = new Square(9);
         square.getArea();
         square.getPerimeter();
-        List<Shape> listOfObjects = List.of(circle, triangle, square);
+
+        Rectangle rectangle = new Rectangle(3, 5);
+        List<Shape> listOfObjects = List.of(circle, triangle, square, rectangle);
         double totalArea = 0.0;
         for (Shape object : listOfObjects) {
             totalArea += object.getArea();
