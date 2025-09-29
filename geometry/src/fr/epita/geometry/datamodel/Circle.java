@@ -1,7 +1,7 @@
 package fr.epita.geometry.datamodel;
 
 
-public class Circle {
+public class Circle implements Shape{
 
     // private static final double PI = 3.14159;
 

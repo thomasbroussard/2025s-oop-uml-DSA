@@ -1,6 +1,6 @@
 package fr.epita.geometry.datamodel;
 
-public class Triangle {
+public class Triangle implements Shape{
     private double base;
     private double sideB;
     private double sideC;
