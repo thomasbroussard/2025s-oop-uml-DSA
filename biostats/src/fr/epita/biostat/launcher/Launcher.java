@@ -14,18 +14,22 @@ public class Launcher {
         File file = new File("biostats/biostat.csv");
         Scanner sc = new Scanner(file);
         List<BioStatEntry> entries = new ArrayList<>();
+        sc.nextLine(); // skip the first row, it is headers
         while (sc.hasNextLine()) {
             String line = sc.nextLine();
             line = line.replace("\"", "");
             String[] columns = line.split(",");
-            System.out.print(columns[0] + " ");
-            System.out.println(columns[1]);
 
-            BioStatEntry entry = new BioStatEntry(columns[0], columns[1] ...);
-
+            BioStatEntry entry = new BioStatEntry(columns[0],
+                    columns[1],
+                    Integer.parseInt(columns[2].trim()),
+                    Integer.parseInt(columns[3].trim()),
+                    Integer.parseInt(columns[4].trim())
+            );
+            entries.add(entry);
         }
 
-
+        System.out.println(entries.size());
         //I want a List<BioStatEntry>
         sc.close();
     }
