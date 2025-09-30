@@ -35,7 +35,15 @@ public class Launcher {
         //...
         //design a print function that provides the previous display according to the map containing the distribution
 
-
+        for (Map.Entry<Integer, Integer> entry : countByAge.entrySet()) {
+            Integer value = entry.getValue();
+            String bar = "";
+            for (int i = 0; i < value; i++) {
+                bar += "..";
+            }
+            System.out.println(entry.getKey() + " : " + bar );
+        }
+        //try to display horizontally (algo problem, not java! :-))
     }
 
 
