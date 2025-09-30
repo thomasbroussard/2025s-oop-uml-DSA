@@ -22,7 +22,7 @@ public class CSVService {
             String[] columns = line.split(",");
 
             BioStatEntry entry = new BioStatEntry(columns[0],
-                    columns[1],
+                    columns[1].trim(),
                     Integer.parseInt(columns[2].trim()),
                     Integer.parseInt(columns[3].trim()),
                     Integer.parseInt(columns[4].trim())
@@ -33,9 +33,22 @@ public class CSVService {
         return entries;
     }
 
-    public static void writeEntriesFromFile(String pathname, List<BioStatEntry> entries) throws FileNotFoundException {
+    public static void writeEntriesToFile(String pathname, List<BioStatEntry> entries) throws FileNotFoundException {
         File file = new File(pathname);
         PrintWriter pw = new PrintWriter(file);
+        String headers = """
+                "Name",     "Sex", "Age", "Height (in)", "Weight (lbs)"
+                """;
+        pw.println(headers);
+        for (BioStatEntry entry : entries) {
+            String line = entry.getName() + ", "
+                    + entry.getSex() + ", "
+                    + entry.getAge() + ", "
+                    + entry.getHeight() + ", "
+                    + entry.getWeight();
+            pw.println(line);
+        }
+        pw.close();
 
 
 
