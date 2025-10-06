@@ -1,5 +1,8 @@
 package fr.epita.patients.datamodel;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public class Patient {
 
     //pat_num_HC;pat_lastname;pat_firstname;pat_address;pat_tel;pat_insurance_id;pat_sub_date
@@ -9,9 +12,9 @@ public class Patient {
     private String address;
     private String tel;
     private Integer insuranceId;
-    private String subDate;
+    private Date subDate;
 
-    public Patient(String patNumHC, String lastName, String firstName, String address, String tel, Integer insuranceId, String subDate) {
+    public Patient(String patNumHC, String lastName, String firstName, String address, String tel, Integer insuranceId, Date subDate) {
         this.patNumHC = patNumHC;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -69,11 +72,11 @@ public class Patient {
         this.insuranceId = insuranceId;
     }
 
-    public String getSubDate() {
+    public Date getSubDate() {
         return subDate;
     }
 
-    public void setSubDate(String subDate) {
+    public void setSubDate(Date subDate) {
         this.subDate = subDate;
     }
 }

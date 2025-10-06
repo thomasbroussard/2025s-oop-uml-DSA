@@ -5,12 +5,16 @@ import fr.epita.patients.datamodel.Patient;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Launcher {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ParseException {
         File file  = new File("./patients/patients.csv");
 
         List<String> lines = Files.readAllLines(file.toPath());
@@ -18,8 +22,16 @@ public class Launcher {
         List<Patient> patients = new ArrayList<Patient>();
         for (String line : lines) {
             String[] parts = line.split(";");
-            //patients.add();
+            //pat_num_HC;pat_lastname;pat_firstname;pat_address;pat_tel;pat_insurance_id;pat_subscription_date
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date subscriptionDate = sdf.parse(parts[6]);
+            Date now = new Date();
+
+            Patient patient = new Patient(parts[0], parts[1],parts[2], parts[3], parts[4], Integer.parseInt(parts[5]), subscriptionDate);
+            patients.add(patient);
         }
+
+        //implement compute seniority
         System.out.println(patients.size());
 
     }
