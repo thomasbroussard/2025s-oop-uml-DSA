@@ -13,10 +13,11 @@ public class Launcher {
         String pathname = "biostats/biostat.csv";
         List<BioStatEntry> entries = CSVService.readEntriesFromFile(pathname);
 
+
         CSVService.writeEntriesToFile("biostats/biostat.out.csv", entries);
 
         Map<Integer, Integer> countByAge = new LinkedHashMap<Integer, Integer>();
-       // Collections.sort(entries, (e1,e2)  -> e1.getAge() - e2.getAge());
+        //Collections.sort(entries, (e1,e2)  -> e1.getAge() - e2.getAge());
         entries.sort(Comparator.comparing(BioStatEntry::getAge));
         for (BioStatEntry entry : entries) {
             Integer age = entry.getAge();
