@@ -1,6 +1,7 @@
 package fr.epita.patients.launcher;
 
 import fr.epita.patients.datamodel.Patient;
+import fr.epita.patients.services.PatientsBusinessLogicService;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,11 +29,10 @@ public class Launcher {
             patients.add(patient);
         }
 
-        Map<String, Double> seniorityMap = new HashMap<String, Double>();
+        PatientsBusinessLogicService pbls = new PatientsBusinessLogicService();
+        Map<String, Long> seniorityMap = pbls.computeSeniorityMap(patients);
+        System.out.println(seniorityMap);
 
-
-        //implement compute seniority
-        System.out.println(patients.size());
 
     }
 }
