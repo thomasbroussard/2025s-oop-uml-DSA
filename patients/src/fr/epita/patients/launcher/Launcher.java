@@ -22,16 +22,22 @@ public class Launcher {
         for (String line : lines) {
             String[] parts = line.split(";");
             //pat_num_HC;pat_lastname;pat_firstname;pat_address;pat_tel;pat_insurance_id;pat_subscription_date
+
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Date subscriptionDate = sdf.parse(parts[6]);
 
-            Patient patient = new Patient(parts[0], parts[1],parts[2], parts[3], parts[4], Integer.parseInt(parts[5]), subscriptionDate);
+            String patNumHC = parts[0];
+
+
+            Patient patient = new Patient(patNumHC, parts[1],parts[2], parts[3], parts[4], Integer.parseInt(parts[5]), subscriptionDate);
             patients.add(patient);
         }
 
         PatientsBusinessLogicService pbls = new PatientsBusinessLogicService();
         Map<String, Long> seniorityMap = pbls.computeSeniorityMap(patients);
         System.out.println(seniorityMap);
+
+        //compute the distribution between males and females in this dataset
 
 
     }

@@ -5,6 +5,11 @@ import java.util.Date;
 
 public class Patient {
 
+    private final String gender;
+    private final String birthYear;
+    private final String birthMonth;
+    private final String birthLocation
+            ;
     //pat_num_HC;pat_lastname;pat_firstname;pat_address;pat_tel;pat_insurance_id;pat_sub_date
     private String patNumHC;
     private String lastName;
@@ -22,6 +27,10 @@ public class Patient {
         this.tel = tel;
         this.insuranceId = insuranceId;
         this.subDate = subDate;
+        this.gender = patNumHC.substring(0, 1);
+        this.birthYear = patNumHC.substring(2, 4);
+        this.birthMonth = patNumHC.substring(5, 7);
+        this.birthLocation = patNumHC.substring(8, 10);
     }
 
     public String getPatNumHC() {
