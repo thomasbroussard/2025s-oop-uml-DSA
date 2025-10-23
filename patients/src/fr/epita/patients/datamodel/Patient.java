@@ -5,6 +5,22 @@ import java.util.Date;
 
 public class Patient {
 
+    public String getGender() {
+        return gender;
+    }
+
+    public String getBirthYear() {
+        return birthYear;
+    }
+
+    public String getBirthMonth() {
+        return birthMonth;
+    }
+
+    public String getBirthLocation() {
+        return birthLocation;
+    }
+
     private final String gender;
     private final String birthYear;
     private final String birthMonth;

@@ -37,6 +37,27 @@ public class Launcher {
         Map<String, Long> seniorityMap = pbls.computeSeniorityMap(patients);
         System.out.println(seniorityMap);
 
+        Map<String, Integer> countByGender = new HashMap<>();
+        for (Patient patient: patients){
+            Integer i = countByGender.get(patient.getGender());
+            if (i == null) {
+                i = 0;
+            }
+            countByGender.put(patient.getGender(), i+1);
+
+        }
+        System.out.println(countByGender);
+
+        Map<String, Integer> countByDepartment = new HashMap<>();
+        for (Patient patient: patients){
+            Integer i = countByGender.get(patient.getBirthLocation());
+            if (i == null) {
+                i = 0;
+            }
+            countByGender.put(patient.getBirthLocation(), i+1);
+
+        }
+        System.out.println(countByGender);
         //compute the distribution between males and females in this dataset
 
 
