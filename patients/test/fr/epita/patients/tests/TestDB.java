@@ -31,6 +31,22 @@ public class TestDB {
             System.out.println("test successful");
         }
 
+        String insertQuery = "INSERT INTO PATIENTS(patNumHC, lastName, firstName, address) VALUES (?,?,?,?)";
+        preparedStatement = connection.prepareStatement(insertQuery);
+        preparedStatement.setString(1, "1234");
+        preparedStatement.setString(2, "BOB");
+        preparedStatement.setString(3, "John");
+        preparedStatement.setString(4, "Paris");
+
+        preparedStatement.execute();
+
+        resultSet = connection.prepareStatement(testQuery).executeQuery();
+        while (resultSet.next()) {
+            System.out.println(resultSet.getString("patNumHC"));
+            if (resultSet.getString("patNumHC").equals("1234")) {
+                System.out.println("test successful");
+            }
+        }
 
     }
 }
