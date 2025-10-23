@@ -19,7 +19,7 @@ public class TestDB {
         String testQuery = testCreateTable(connection);
 
        // testInsert(connection, testQuery);
-        testUpdate(connection, testQuery);
+        testDelete(connection, testQuery);
 
 
     }
@@ -96,7 +96,34 @@ public class TestDB {
         }
 
         connection.prepareStatement("TRUNCATE TABLE PATIENTS").execute();
+    }
+    private static void testDelete(Connection connection, String testQuery) throws SQLException {
+       //given
+        ResultSet resultSet;
+        PreparedStatement preparedStatement;
+        String insertQuery = "INSERT INTO PATIENTS(patNumHC, lastName, firstName, address) VALUES (?,?,?,?)";
+        preparedStatement = connection.prepareStatement(insertQuery);
+        preparedStatement.setString(1, "1234");
+        preparedStatement.setString(2, "BOB");
+        preparedStatement.setString(3, "John");
+        preparedStatement.setString(4, "Paris");
+        preparedStatement.execute();
 
+        //when
+        String updateQuery = "DELETE FROM PATIENTS WHERE patNumHC = ?";
+        preparedStatement = connection.prepareStatement(updateQuery);
+        preparedStatement.setString(1, "1234");
+        preparedStatement.execute();
 
+        resultSet = connection.prepareStatement(testQuery).executeQuery();
+        //then
+        int count = 0;
+        while (resultSet.next()) {
+          count++;
+        }
+        if (count == 0){
+            System.out.println("test successful");
+        }
+        connection.prepareStatement("TRUNCATE TABLE PATIENTS").execute();
     }
 }
