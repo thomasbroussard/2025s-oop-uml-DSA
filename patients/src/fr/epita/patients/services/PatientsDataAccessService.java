@@ -1,9 +1,11 @@
 package fr.epita.patients.services;
 
 import fr.epita.patients.datamodel.Patient;
+import fr.epita.patients.exceptions.PatientCreationException;
 import fr.epita.patients.exceptions.PatientUpdateException;
 
 import java.sql.*;
+import java.util.List;
 
 public class PatientsDataAccessService {
 
@@ -34,17 +36,18 @@ public class PatientsDataAccessService {
         return connection;
     }
 
-    public void createPatient(Patient patient) throws SQLException {
-        Connection connection = getConnection();
-        ResultSet resultSet;
-        PreparedStatement preparedStatement;
-        String insertQuery = "INSERT INTO PATIENTS(patNumHC, lastName, firstName, address) VALUES (?,?,?,?)";
-        preparedStatement = connection.prepareStatement(insertQuery);
-        preparedStatement.setString(1, patient.getPatNumHC());
-        preparedStatement.setString(2, patient.getLastName());
-        preparedStatement.setString(3, patient.getFirstName());
-        preparedStatement.setString(4, patient.getAddress());
-        preparedStatement.execute();
+    public void createPatient(Patient patient) throws PatientCreationException {
+        try(Connection connection = getConnection()) {
+            String insertQuery = "INSERT INTO PATIENTS(patNumHC, lastName, firstName, address) VALUES (?,?,?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+            preparedStatement.setString(1, patient.getPatNumHC());
+            preparedStatement.setString(2, patient.getLastName());
+            preparedStatement.setString(3, patient.getFirstName());
+            preparedStatement.setString(4, patient.getAddress());
+            preparedStatement.execute();
+        }catch (SQLException e){
+            throw new PatientCreationException("unable to create patient", e);
+        }
     }
 
     public void updatePatient(Patient patient) throws PatientUpdateException {
@@ -61,6 +64,36 @@ public class PatientsDataAccessService {
     }
 
     public void deletePatient(Patient patient) {
+
+    }
+
+    public Patient getPatient(String patNumHC) {
+
+    }
+
+    public List<Patient> searchPatients(Patient patientExample) {
+        String patientSearchquery = """
+        SELECT * FROM PATIENTS WHERE 
+                                (? IS NULL OR patNumHC = ?) AND 
+                                (? IS NULL OR lastName LIKE ?) AND 
+                                (? IS NULL OR firstName = ?) AND 
+                                (? IS NULL OR address = ?)
+        """;
+        try (Connection connection = getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(patientSearchquery);
+            preparedStatement.setString(1, patientExample.getPatNumHC());
+            preparedStatement.setString(2, patientExample.getPatNumHC());
+            preparedStatement.setString(3, patientExample.getLastName());
+            preparedStatement.setString(4, patientExample.getLastName() + "%");
+            preparedStatement.setString(5, patientExample.getFirstName());
+            preparedStatement.setString(6, patientExample.getFirstName());
+            preparedStatement.setString(7, patientExample.getAddress());
+            preparedStatement.setString(8, patientExample.getAddress());
+
+        }catch (SQLException e){
+            throw new PatientSearchException();
+        }
+
 
     }
 
