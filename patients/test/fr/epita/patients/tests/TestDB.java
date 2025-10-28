@@ -1,11 +1,16 @@
 package fr.epita.patients.tests;
 
+import fr.epita.patients.datamodel.Patient;
+import fr.epita.patients.exceptions.PatientSearchException;
+import fr.epita.patients.services.PatientsDataAccessService;
+
 import java.sql.*;
+import java.util.List;
 
 public class TestDB {
 
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception, PatientSearchException {
         // db url
          // username
          // password
@@ -16,12 +21,11 @@ public class TestDB {
         Connection connection = DriverManager.getConnection(url, userName, password);
 
 
-        String testQuery = testCreateTable(connection);
 
        // testInsert(connection, testQuery);
-        testDelete(connection, testQuery);
+        // testDelete(connection, testQuery);
 
-
+        testSearch();
     }
 
     private static String testCreateTable(Connection connection) throws SQLException {
@@ -125,5 +129,20 @@ public class TestDB {
             System.out.println("test successful");
         }
         connection.prepareStatement("TRUNCATE TABLE PATIENTS").execute();
+    }
+
+    public static void testSearch() throws Exception, PatientSearchException {
+        //given
+        PatientsDataAccessService dataAccessService = new PatientsDataAccessService();
+        dataAccessService.createPatient(new Patient("1852458963215","testLN", "testFN", "paris", null, null, null));
+        dataAccessService.createPatient(new Patient("1985236548520","testLN2", "testFN2", "paris", null, null, null));
+        dataAccessService.createPatient(new Patient("2365987542365","testLN3", "testFN3", "marseille", null, null, null));
+
+        //when
+        List<Patient> patients = dataAccessService.searchPatients(new Patient(null, null, null, "paris", null, null, null));
+
+        //then
+        System.out.println("size: "+ patients.size());
+
     }
 }

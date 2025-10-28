@@ -2,9 +2,11 @@ package fr.epita.patients.services;
 
 import fr.epita.patients.datamodel.Patient;
 import fr.epita.patients.exceptions.PatientCreationException;
+import fr.epita.patients.exceptions.PatientSearchException;
 import fr.epita.patients.exceptions.PatientUpdateException;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PatientsDataAccessService {
@@ -68,10 +70,11 @@ public class PatientsDataAccessService {
     }
 
     public Patient getPatient(String patNumHC) {
-
+        return null;
     }
 
-    public List<Patient> searchPatients(Patient patientExample) {
+    public List<Patient> searchPatients(Patient patientExample) throws PatientSearchException {
+        List<Patient> patients = new ArrayList<>();
         String patientSearchquery = """
         SELECT * FROM PATIENTS WHERE 
                                 (? IS NULL OR patNumHC = ?) AND 
@@ -89,11 +92,25 @@ public class PatientsDataAccessService {
             preparedStatement.setString(6, patientExample.getFirstName());
             preparedStatement.setString(7, patientExample.getAddress());
             preparedStatement.setString(8, patientExample.getAddress());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Patient patient = new Patient(  resultSet.getString("patNumHC"),
+                        resultSet.getString("lastName"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("address"),
+                        null, null, null
+                        );
 
+                patients.add(patient);
+
+
+                ;
+            }
         }catch (SQLException e){
+            //TODO create it properly
             throw new PatientSearchException();
         }
-
+        return patients;
 
     }
 

@@ -21,11 +21,11 @@ public class Patient {
         return birthLocation;
     }
 
-    private final String gender;
-    private final String birthYear;
-    private final String birthMonth;
-    private final String birthLocation
-            ;
+    private String gender;
+    private String birthYear;
+    private String birthMonth;
+    private String birthLocation;
+
     //pat_num_HC;pat_lastname;pat_firstname;pat_address;pat_tel;pat_insurance_id;pat_sub_date
     private String patNumHC;
     private String lastName;
@@ -43,6 +43,9 @@ public class Patient {
         this.tel = tel;
         this.insuranceId = insuranceId;
         this.subDate = subDate;
+        if (patNumHC == null || patNumHC.equals("")) {
+            return;
+        }
         this.gender = patNumHC.substring(0, 1);
         this.birthYear = patNumHC.substring(2, 4);
         this.birthMonth = patNumHC.substring(5, 7);
