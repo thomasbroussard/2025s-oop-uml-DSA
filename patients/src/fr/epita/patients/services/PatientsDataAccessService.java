@@ -1,6 +1,7 @@
 package fr.epita.patients.services;
 
 import fr.epita.patients.datamodel.Patient;
+import fr.epita.patients.exceptions.PatientUpdateException;
 
 import java.sql.*;
 
@@ -46,8 +47,17 @@ public class PatientsDataAccessService {
         preparedStatement.execute();
     }
 
-    public void updatePatient(Patient patient) {
+    public void updatePatient(Patient patient) throws PatientUpdateException {
+        String updateQuery = "UPDATE PATIENTS SET lastName = ? WHERE patNumHC = ?";
 
+        try (Connection connection = getConnection()){
+            PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+            preparedStatement.setString(1, patient.getLastName());
+            preparedStatement.setString(2, patient.getPatNumHC());
+            preparedStatement.execute();
+        }catch (SQLException e) {
+            throw new PatientUpdateException("unable to update patient with id: " + patient.getPatNumHC(), e);
+        }
     }
 
     public void deletePatient(Patient patient) {
